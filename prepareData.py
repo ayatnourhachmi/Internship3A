@@ -8,7 +8,6 @@ df = pd.read_csv(path, encoding='utf-8', skipinitialspace=True)
 # Display the first few rows to ensure the data is loaded correctly
 print(df.head())
 
-
 # Group by the Category column and get the count of each category
 category_counts = df['Category'].value_counts()
 
