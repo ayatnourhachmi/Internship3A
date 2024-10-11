@@ -4,15 +4,20 @@ import csv
 from bs4 import BeautifulSoup
 
 # Define paths
-csv_file_path = "LabellingManual.csv"
+csv_file_path = "data_labeling.csv"
 data_folder_path = "data"  # Adjust this path to the correct folder containing the data
 
 # Function to extract title and meta tags from an HTML string
 def extract_tags_from_html(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
-    title_tag = soup.title.string if soup.title else "No title found"
-    # Separate meta contents with a newline character
-    meta_tags = "\n".join([meta.get("content", "") for meta in soup.find_all("meta") if meta.get("content")])
+    
+    # Extract the full <title> tag as a string
+    title_tag = str(soup.title) if soup.title else "No title found"
+    
+    # Extract all <meta> tags as full strings, or return an empty string if none are found
+    meta_tags_list = [str(meta) for meta in soup.find_all('meta')]
+    meta_tags = "\n".join(meta_tags_list) if meta_tags_list else ""
+    
     return title_tag, meta_tags
 
 # Function to check if a file contains valid JSON
